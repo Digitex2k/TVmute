@@ -99,20 +99,8 @@ public class SetupActivity extends Activity {
         instructionsParams.topMargin = dp(16);
         root.addView(instructions, instructionsParams);
 
-        Button check = new Button(this);
-        check.setId(View.generateViewId());
-        styleTvButton(check, R.string.how_to_check, R.drawable.ic_info);
-        check.setOnClickListener(v -> status.setText(R.string.check_hint));
-        LinearLayout.LayoutParams checkParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        checkParams.topMargin = dp(16);
-        root.addView(check, checkParams);
-
         open.setNextFocusDownId(instructions.getId());
         instructions.setNextFocusUpId(open.getId());
-        instructions.setNextFocusDownId(check.getId());
-        check.setNextFocusUpId(instructions.getId());
 
         setContentView(scroll);
         open.requestFocus();
