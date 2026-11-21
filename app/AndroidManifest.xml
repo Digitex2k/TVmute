@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.digit.tvmute"
-    android:versionCode="2"
-    android:versionName="1.1">
+    android:versionCode="3"
+    android:versionName="1.2">
 
     <uses-sdk android:minSdkVersion="28" android:targetSdkVersion="28" />
 
@@ -27,6 +27,11 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".InstructionsActivity"
+            android:exported="false"
+            android:label="@string/instructions_title" />
 
         <service
             android:name=".MuteAccessibilityService"

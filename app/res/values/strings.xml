@@ -7,8 +7,11 @@
     <string name="service_off">Служба: выключена</string>
     <string name="open_accessibility">Открыть настройки</string>
     <string name="how_to_check">Как проверить</string>
+    <string name="instructions_button">Инструкция</string>
+    <string name="instructions_title">Инструкция</string>
+    <string name="back">Назад</string>
     <string name="check_hint">Коротко нажмите Mi — звук вкл/выкл. Удерживайте Mi от 0,5 секунды — откроется PatchWall.</string>
-    <string name="service_off_hint">Служба выключена. Включите её: Настройки → Настройки устройства → Специальные возможности → Сервисы → TV Mute. Ползунок должен быть включён.</string>
+    <string name="service_off_hint">Служба выключена. Включите её в «Специальные возможности → Сервисы» или откройте «Инструкция».</string>
     <string name="details_title">Что делает приложение</string>
     <string name="details_what">Короткое нажатие кнопки Mi — включить или выключить звук. Удержание кнопки Mi от 0,5 секунды — штатное действие кнопки: переход в PatchWall. Все остальные кнопки пульта приложение не трогает и никак на них не влияет.</string>
     <string name="enable_title">Как включить службу</string>

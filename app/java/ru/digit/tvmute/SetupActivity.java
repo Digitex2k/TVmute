@@ -34,9 +34,9 @@ public class SetupActivity extends Activity {
         root.setGravity(Gravity.CENTER_HORIZONTAL);
         root.setPadding(pad, pad, pad, pad);
         root.setBackgroundColor(Color.parseColor("#101418"));
-        scroll.addView(root,
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
+        scroll.addView(root, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
 
         TextView title = new TextView(this);
         title.setText(R.string.app_name);
@@ -45,25 +45,26 @@ public class SetupActivity extends Activity {
         title.setGravity(Gravity.CENTER);
         root.addView(title);
 
+        TextView subtitle = new TextView(this);
+        subtitle.setText(R.string.service_description);
+        subtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        subtitle.setTextColor(Color.parseColor("#90A4AE"));
+        subtitle.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams subtitleParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        subtitleParams.topMargin = dp(8);
+        root.addView(subtitle, subtitleParams);
+
         status = new TextView(this);
         status.setTextSize(24);
         status.setTextColor(Color.parseColor("#B0BEC5"));
         status.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams statusParams =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-        statusParams.topMargin = dp(16);
-        statusParams.bottomMargin = dp(32);
+        LinearLayout.LayoutParams statusParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        statusParams.topMargin = dp(24);
         root.addView(status, statusParams);
-
-        Button open = new Button(this);
-        open.setId(View.generateViewId());
-        styleTvButton(open, R.string.open_accessibility, R.drawable.ic_open);
-        open.setOnClickListener(v -> openSettings());
-        LinearLayout.LayoutParams openParams =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-        root.addView(open, openParams);
 
         hint = new TextView(this);
         hint.setText(R.string.service_off_hint);
@@ -71,86 +72,50 @@ public class SetupActivity extends Activity {
         hint.setTextColor(Color.parseColor("#FF8A65"));
         hint.setGravity(Gravity.CENTER);
         hint.setVisibility(View.GONE);
-        LinearLayout.LayoutParams hintParams =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-        hintParams.topMargin = dp(24);
+        LinearLayout.LayoutParams hintParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        hintParams.topMargin = dp(16);
         root.addView(hint, hintParams);
+
+        Button open = new Button(this);
+        open.setId(View.generateViewId());
+        styleTvButton(open, R.string.open_accessibility, R.drawable.ic_open);
+        open.setOnClickListener(v -> openSettings());
+        LinearLayout.LayoutParams openParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        openParams.topMargin = dp(24);
+        root.addView(open, openParams);
+
+        Button instructions = new Button(this);
+        instructions.setId(View.generateViewId());
+        styleTvButton(instructions, R.string.instructions_button, R.drawable.ic_book);
+        instructions.setOnClickListener(v -> startActivity(
+                new Intent(this, InstructionsActivity.class)));
+        LinearLayout.LayoutParams instructionsParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        instructionsParams.topMargin = dp(16);
+        root.addView(instructions, instructionsParams);
 
         Button check = new Button(this);
         check.setId(View.generateViewId());
         styleTvButton(check, R.string.how_to_check, R.drawable.ic_info);
         check.setOnClickListener(v -> status.setText(R.string.check_hint));
-        LinearLayout.LayoutParams checkParams =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams checkParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         checkParams.topMargin = dp(16);
         root.addView(check, checkParams);
 
-        open.setNextFocusDownId(check.getId());
-        check.setNextFocusUpId(open.getId());
-
-        TextView detailsTitle = sectionTitle(R.string.details_title);
-        root.addView(detailsTitle, sectionParams());
-
-        TextView detailsWhat = bodyText(R.string.details_what);
-        root.addView(detailsWhat, sectionParams());
-
-        TextView enableTitle = sectionTitle(R.string.enable_title);
-        root.addView(enableTitle, sectionParams());
-
-        TextView enableText = bodyText(R.string.enable_text);
-        root.addView(enableText, sectionParams());
-
-        TextView notesTitle = sectionTitle(R.string.notes_title);
-        root.addView(notesTitle, sectionParams());
-
-        TextView notesText = bodyText(R.string.notes_text);
-        root.addView(notesText, sectionParams());
+        open.setNextFocusDownId(instructions.getId());
+        instructions.setNextFocusUpId(open.getId());
+        instructions.setNextFocusDownId(check.getId());
+        check.setNextFocusUpId(instructions.getId());
 
         setContentView(scroll);
         open.requestFocus();
-    }
-
-    private TextView sectionTitle(int textRes) {
-        TextView tv = new TextView(this);
-        tv.setText(textRes);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        tv.setTextColor(Color.WHITE);
-        tv.setGravity(Gravity.CENTER);
-        return tv;
-    }
-
-    private LinearLayout.LayoutParams sectionParams() {
-        LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.topMargin = dp(28);
-        return params;
-    }
-
-    private TextView bodyText(int textRes) {
-        TextView tv = new TextView(this);
-        tv.setText(textRes);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        tv.setTextColor(Color.parseColor("#CFD8DC"));
-        tv.setLineSpacing(0, 1.25f);
-        return tv;
-    }
-
-    private void styleTvButton(Button button, int textRes, int iconRes) {
-        button.setText(textRes);
-        button.setAllCaps(false);
-        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        button.setTextColor(Color.WHITE);
-        button.setBackgroundResource(R.drawable.tv_button);
-        button.setCompoundDrawablesWithIntrinsicBounds(iconRes, 0, 0, 0);
-        button.setCompoundDrawablePadding(dp(12));
-        int vpad = dp(14);
-        int hpad = dp(20);
-        button.setPadding(hpad, vpad, hpad, vpad);
-        button.setFocusable(true);
-        button.setFocusableInTouchMode(true);
     }
 
     @Override
@@ -193,6 +158,21 @@ public class SetupActivity extends Activity {
         ComponentName me = new ComponentName(this, MuteAccessibilityService.class);
         return enabled.contains(me.flattenToString())
                 || enabled.contains(me.flattenToShortString());
+    }
+
+    private void styleTvButton(Button button, int textRes, int iconRes) {
+        button.setText(textRes);
+        button.setAllCaps(false);
+        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        button.setTextColor(Color.WHITE);
+        button.setBackgroundResource(R.drawable.tv_button);
+        button.setCompoundDrawablesWithIntrinsicBounds(iconRes, 0, 0, 0);
+        button.setCompoundDrawablePadding(dp(12));
+        int vpad = dp(14);
+        int hpad = dp(20);
+        button.setPadding(hpad, vpad, hpad, vpad);
+        button.setFocusable(true);
+        button.setFocusableInTouchMode(true);
     }
 
     private int dp(int value) {
