@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -50,9 +51,13 @@ public class SetupActivity extends Activity {
         root.addView(status, statusParams);
 
         Button open = new Button(this);
-        open.setText(R.string.open_accessibility);
+        open.setId(View.generateViewId());
+        styleTvButton(open, R.string.open_accessibility, R.drawable.ic_open);
         open.setOnClickListener(v -> openSettings());
-        root.addView(open);
+        LinearLayout.LayoutParams openParams =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+        root.addView(open, openParams);
 
         hint = new TextView(this);
         hint.setText(R.string.service_off_hint);
@@ -67,16 +72,35 @@ public class SetupActivity extends Activity {
         root.addView(hint, hintParams);
 
         Button check = new Button(this);
-        check.setText(R.string.how_to_check);
+        check.setId(View.generateViewId());
+        styleTvButton(check, R.string.how_to_check, R.drawable.ic_info);
         check.setOnClickListener(v -> status.setText(R.string.check_hint));
         LinearLayout.LayoutParams checkParams =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
         checkParams.topMargin = dp(16);
         root.addView(check, checkParams);
 
+        open.setNextFocusDownId(check.getId());
+        check.setNextFocusUpId(open.getId());
+
         setContentView(root);
         open.requestFocus();
+    }
+
+    private void styleTvButton(Button button, int textRes, int iconRes) {
+        button.setText(textRes);
+        button.setAllCaps(false);
+        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        button.setTextColor(Color.WHITE);
+        button.setBackgroundResource(R.drawable.tv_button);
+        button.setCompoundDrawablesWithIntrinsicBounds(iconRes, 0, 0, 0);
+        button.setCompoundDrawablePadding(dp(12));
+        int vpad = dp(14);
+        int hpad = dp(20);
+        button.setPadding(hpad, vpad, hpad, vpad);
+        button.setFocusable(true);
+        button.setFocusableInTouchMode(true);
     }
 
     @Override
