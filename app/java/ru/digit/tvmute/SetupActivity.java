@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class SetupActivity extends Activity {
@@ -26,11 +27,16 @@ public class SetupActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         int pad = dp(48);
+        ScrollView scroll = new ScrollView(this);
+        scroll.setFillViewport(true);
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setGravity(Gravity.CENTER);
+        root.setGravity(Gravity.CENTER_HORIZONTAL);
         root.setPadding(pad, pad, pad, pad);
         root.setBackgroundColor(Color.parseColor("#101418"));
+        scroll.addView(root,
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
 
         TextView title = new TextView(this);
         title.setText(R.string.app_name);
@@ -84,8 +90,52 @@ public class SetupActivity extends Activity {
         open.setNextFocusDownId(check.getId());
         check.setNextFocusUpId(open.getId());
 
-        setContentView(root);
+        TextView detailsTitle = sectionTitle(R.string.details_title);
+        root.addView(detailsTitle, sectionParams());
+
+        TextView detailsWhat = bodyText(R.string.details_what);
+        root.addView(detailsWhat, sectionParams());
+
+        TextView enableTitle = sectionTitle(R.string.enable_title);
+        root.addView(enableTitle, sectionParams());
+
+        TextView enableText = bodyText(R.string.enable_text);
+        root.addView(enableText, sectionParams());
+
+        TextView notesTitle = sectionTitle(R.string.notes_title);
+        root.addView(notesTitle, sectionParams());
+
+        TextView notesText = bodyText(R.string.notes_text);
+        root.addView(notesText, sectionParams());
+
+        setContentView(scroll);
         open.requestFocus();
+    }
+
+    private TextView sectionTitle(int textRes) {
+        TextView tv = new TextView(this);
+        tv.setText(textRes);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        tv.setTextColor(Color.WHITE);
+        tv.setGravity(Gravity.CENTER);
+        return tv;
+    }
+
+    private LinearLayout.LayoutParams sectionParams() {
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.topMargin = dp(28);
+        return params;
+    }
+
+    private TextView bodyText(int textRes) {
+        TextView tv = new TextView(this);
+        tv.setText(textRes);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        tv.setTextColor(Color.parseColor("#CFD8DC"));
+        tv.setLineSpacing(0, 1.25f);
+        return tv;
     }
 
     private void styleTvButton(Button button, int textRes, int iconRes) {

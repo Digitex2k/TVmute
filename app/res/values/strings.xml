@@ -7,6 +7,12 @@
     <string name="service_off">Служба: выключена</string>
     <string name="open_accessibility">Открыть настройки</string>
     <string name="how_to_check">Как проверить</string>
-    <string name="check_hint">Коротко — звук вкл/выкл. Удержание — PatchWall.</string>
+    <string name="check_hint">Коротко нажмите Mi — звук вкл/выкл. Удерживайте Mi от 0,5 секунды — откроется PatchWall.</string>
     <string name="service_off_hint">На этом ТВ нет экрана доступности. Включить службу можно только через ADB — команда в README.</string>
+    <string name="details_title">Что делает приложение</string>
+    <string name="details_what">Короткое нажатие кнопки Mi — включить или выключить звук. Удержание кнопки Mi от 0,5 секунды — штатное действие кнопки: переход в PatchWall. Все остальные кнопки пульта приложение не трогает и никак на них не влияет.</string>
+    <string name="enable_title">Как включить службу</string>
+    <string name="enable_text">1. Подключите телевизор по ADB с компьютера:\n\nadb connect 192.168.1.1:5555\n(подставьте адрес своего ТВ; на ТВ должен быть включён режим разработчика и отладка по сети)\n\n2. Установите приложение:\n\nadb install -r TVMute.apk\n\n3. Включите службу доступности:\n\nadb shell settings put secure enabled_accessibility_services ru.digit.tvmute/ru.digit.tvmute.MuteAccessibilityService\nadb shell settings put secure accessibility_enabled 1\n\n4. Перезагрузите телевизор и откройте это приложение — здесь должно быть «Служба: включена».\n\nВажно: на этой прошивке нет экрана «Специальные возможности», поэтому кнопка «Открыть настройки» ведёт в общие настройки ТВ — саму службу можно включить только командами выше.</string>
+    <string name="notes_title">Важно знать</string>
+    <string name="notes_text">• Если выключить службу через ADB, фильтр клавиш может «залипнуть» до перезагрузки — просто перезагрузите ТВ, и кнопка Mi вернётся к штатному PatchWall.\n\n• Пока служба включена, удержание кнопок громкости даёт только один шаг. Это ограничение прошивки: любая служба доступности с перехватом клавиш отключает автоповтор громкости. Без службы громкость снова «летит» при удержании.</string>
 </resources>
