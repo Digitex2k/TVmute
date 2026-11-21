@@ -164,7 +164,7 @@ public class SetupActivity extends Activity {
     private void openSettings() {
         Intent accessibility = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
         if (isStub(accessibility)) {
-            Intent main = new Intent(Intent.ACTION_MAIN)
+            Intent main = new Intent(Settings.ACTION_SETTINGS)
                     .setComponent(new ComponentName("com.android.tv.settings",
                             "com.android.tv.settings.MainSettings"));
             try {
