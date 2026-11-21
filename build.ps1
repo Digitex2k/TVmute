@@ -35,6 +35,16 @@ function Ensure-Jdk {
     $env:Path = "$Jdk\bin;$env:Path"
 }
 
+function Strip-Bom {
+    param([string]$Path)
+    $bytes = [System.IO.File]::ReadAllBytes($Path)
+    if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+        $text = [System.IO.File]::ReadAllText($Path)
+        $utf8 = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText($Path, $text, $utf8)
+    }
+}
+
 function Ensure-Keystore {
     if (Test-Path $KsPath) { return }
     New-Item -ItemType Directory -Force (Split-Path $KsPath) | Out-Null
@@ -57,6 +67,7 @@ function Invoke-Tests {
     $files = @(Get-ChildItem -Path $testSrc -Recurse -Filter *.java | ForEach-Object { $_.FullName })
     $logic = Join-Path $root 'app\java\ru\digit\tvmute\PressStateMachine.java'
     if (Test-Path $logic) { $files += $logic }
+    $files | ForEach-Object { Strip-Bom $_ }
 
     & (Join-Path $Jdk 'bin\javac.exe') -encoding UTF-8 -d $out $files
     if ($LASTEXITCODE -ne 0) { throw 'Test compilation failed' }
@@ -95,6 +106,7 @@ function Invoke-Apk {
 
     $sources = @(Get-ChildItem -Path (Join-Path $root 'app\java') -Recurse -Filter *.java | ForEach-Object { $_.FullName })
     $sources += @(Get-ChildItem -Path (Join-Path $root 'build\gen') -Recurse -Filter *.java | ForEach-Object { $_.FullName })
+    $sources | ForEach-Object { Strip-Bom $_ }
 
     & (Join-Path $Jdk 'bin\javac.exe') -encoding UTF-8 -source 8 -target 8 -Xlint:-options `
         -classpath $AndroidJar -d (Join-Path $root 'build\classes') $sources
