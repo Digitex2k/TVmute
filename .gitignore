@@ -1,0 +1,6 @@
+tools/
+build/
+out/
+keystore/
+.superpowers/
+*.zip

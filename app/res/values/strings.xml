@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TV Mute</string>
+    <string name="service_label">TV Mute</string>
+    <string name="service_description">Кнопка Mi: коротко — звук, долго — PatchWall</string>
+</resources>
