@@ -37,6 +37,13 @@ adb shell settings put secure accessibility_enabled 1
 powershell -ExecutionPolicy Bypass -File tests\e2e.ps1
 ```
 
+## Известные ограничения
+
+- **Удержание кнопок громкости не даёт повтора.** На Android TV `PhoneWindowManager` забирает кнопки
+  громкости себе («volume keys never go to the foreground app»), а пульт Xiaomi RC при удержании
+  не присылает repeat-события. Это поведение прошивки/пульта, не приложения: ни Button Mapper,
+  ни любое другое приложение не может его изменить без root.
+
 ## Откат
 
 ```
@@ -45,3 +52,7 @@ adb shell pm enable flar2.homebutton
 ```
 
 Для полного удаления: `adb uninstall ru.digit.tvmute`.
+
+> Примечание по прошивке: прямое отключение службы или пакета через adb на этом ТВ
+> оставляет залипший фильтр клавиш до перезагрузки. Если выключаешь службу, перезагрузи
+> телевизор — тогда кнопка Mi вернётся к штатному PatchWall.

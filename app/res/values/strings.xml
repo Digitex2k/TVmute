@@ -3,4 +3,10 @@
     <string name="app_name">TV Mute</string>
     <string name="service_label">TV Mute</string>
     <string name="service_description">Кнопка Mi: коротко — звук, долго — PatchWall</string>
+    <string name="service_on">Служба: включена</string>
+    <string name="service_off">Служба: выключена</string>
+    <string name="open_accessibility">Открыть настройки</string>
+    <string name="how_to_check">Как проверить</string>
+    <string name="check_hint">Коротко — звук вкл/выкл. Удержание — PatchWall.</string>
+    <string name="service_off_hint">На этом ТВ нет экрана доступности. Включить службу можно только через ADB — команда в README.</string>
 </resources>
